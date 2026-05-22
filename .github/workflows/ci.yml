@@ -1,0 +1,23 @@
+# Active CI for ringi-driven-harness.
+# Runs on every pull request to main: the secret scan must pass before the human merge gate.
+# Test / e2e steps are intentionally omitted until there is code to test
+# (see templates/ci-workflow.yml for the full pattern).
+
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, required for secret scanning
+
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+        # Free for personal-account repositories. A GITLEAKS_LICENSE secret is
+        # only required for organization-owned repos.
