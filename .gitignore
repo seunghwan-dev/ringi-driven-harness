@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Env & secrets
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.p12
+*_report.txt
+
+# Build
+dist/
+build/
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
