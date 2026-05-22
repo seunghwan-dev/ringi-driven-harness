@@ -18,16 +18,7 @@ A harness answers that. An agent harness is the scaffolding around a model — t
 
 ## The workflow
 
-```
-Design (you + HQ chat)
-   → GitHub Issue (self-contained spec)
-   → Autonomous build (Claude Code Routines, in the cloud — your PC can be off)
-   → Pull Request
-   → Automated review + CI (gitleaks · tests · Playwright)
-   → Your review
-   → Merge gate — you approve
-   → main → next task
-```
+![ringi-driven-harness workflow](diagrams/workflow.svg)
 
 Four independent Claude sessions touch each change — the one that designs, the one that builds, the one that reviews, the one that evaluates — and none of them sees the others' conclusions. That mutual blindness is the cross-check.
 

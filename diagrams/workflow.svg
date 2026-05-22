@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 506" width="520" role="img" aria-labelledby="title desc">
+<title id="title">ringi-driven-harness workflow</title>
+<desc id="desc">A vertical flow: Design (human), GitHub Issue, Autonomous build in the cloud, Pull Request, Automated review and CI, Human review, and a Merge gate where the human approves before a change ships and the cycle repeats. Human steps and the gate are coral, cloud-autonomous steps are purple, artifacts are gray.</desc>
+<style>
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  .bg-human { fill:#FAECE7; stroke:#993C1D; }
+  .bg-cloud { fill:#EEEDFE; stroke:#534AB7; }
+  .bg-art   { fill:#F1EFE8; stroke:#5F5E5A; }
+  .t-human  { fill:#712B13; }
+  .t-cloud  { fill:#3C3489; }
+  .t-art    { fill:#444441; }
+  .t-sub    { fill:#5F5E5A; }
+  .edge     { stroke:#888780; }
+  @media (prefers-color-scheme: dark) {
+    .bg-human { fill:#712B13; stroke:#F0997B; }
+    .bg-cloud { fill:#3C3489; stroke:#AFA9EC; }
+    .bg-art   { fill:#444441; stroke:#B4B2A9; }
+    .t-human  { fill:#F5C4B3; }
+    .t-cloud  { fill:#CECBF6; }
+    .t-art    { fill:#D3D1C7; }
+    .t-sub    { fill:#B4B2A9; }
+    .edge     { stroke:#9C9A92; }
+  }
+</style>
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<rect class="bg-human" x="40" y="14" width="12" height="12" rx="3" stroke-width="0.5"/>
+<text class="t-sub" x="58" y="20" font-size="12" dominant-baseline="central">human</text>
+<rect class="bg-cloud" x="150" y="14" width="12" height="12" rx="3" stroke-width="0.5"/>
+<text class="t-sub" x="168" y="20" font-size="12" dominant-baseline="central">cloud (PC off)</text>
+<rect class="bg-art" x="300" y="14" width="12" height="12" rx="3" stroke-width="0.5"/>
+<text class="t-sub" x="318" y="20" font-size="12" dominant-baseline="central">artifact</text>
+
+<rect class="bg-human" x="130" y="42" width="260" height="48" rx="8" stroke-width="0.5"/>
+<text class="t-human" x="260" y="59" font-size="14" font-weight="500" text-anchor="middle" dominant-baseline="central">Design</text>
+<text class="t-sub" x="260" y="75" font-size="12" text-anchor="middle" dominant-baseline="central">you + HQ chat</text>
+<line class="edge" x1="260" y1="92" x2="260" y2="106" stroke-width="1" marker-end="url(#a)"/>
+
+<rect class="bg-art" x="130" y="108" width="260" height="48" rx="8" stroke-width="0.5"/>
+<text class="t-art" x="260" y="125" font-size="14" font-weight="500" text-anchor="middle" dominant-baseline="central">GitHub Issue</text>
+<text class="t-sub" x="260" y="141" font-size="12" text-anchor="middle" dominant-baseline="central">self-contained spec</text>
+<line class="edge" x1="260" y1="158" x2="260" y2="172" stroke-width="1" marker-end="url(#a)"/>
+
+<rect class="bg-cloud" x="130" y="174" width="260" height="48" rx="8" stroke-width="0.5"/>
+<text class="t-cloud" x="260" y="191" font-size="14" font-weight="500" text-anchor="middle" dominant-baseline="central">Autonomous build</text>
+<text class="t-sub" x="260" y="207" font-size="12" text-anchor="middle" dominant-baseline="central">Routines · cloud · PC off</text>
+<line class="edge" x1="260" y1="224" x2="260" y2="238" stroke-width="1" marker-end="url(#a)"/>
+
+<rect class="bg-art" x="130" y="240" width="260" height="48" rx="8" stroke-width="0.5"/>
+<text class="t-art" x="260" y="257" font-size="14" font-weight="500" text-anchor="middle" dominant-baseline="central">Pull Request</text>
+<text class="t-sub" x="260" y="273" font-size="12" text-anchor="middle" dominant-baseline="central">code + tests</text>
+<line class="edge" x1="260" y1="290" x2="260" y2="304" stroke-width="1" marker-end="url(#a)"/>
+
+<rect class="bg-cloud" x="130" y="306" width="260" height="48" rx="8" stroke-width="0.5"/>
+<text class="t-cloud" x="260" y="323" font-size="14" font-weight="500" text-anchor="middle" dominant-baseline="central">Automated review + CI</text>
+<text class="t-sub" x="260" y="339" font-size="12" text-anchor="middle" dominant-baseline="central">gitleaks · tests · Playwright</text>
+<line class="edge" x1="260" y1="356" x2="260" y2="370" stroke-width="1" marker-end="url(#a)"/>
+
+<rect class="bg-human" x="130" y="372" width="260" height="48" rx="8" stroke-width="0.5"/>
+<text class="t-human" x="260" y="389" font-size="14" font-weight="500" text-anchor="middle" dominant-baseline="central">Human review</text>
+<text class="t-sub" x="260" y="405" font-size="12" text-anchor="middle" dominant-baseline="central">evaluate the PR</text>
+<line class="edge" x1="260" y1="422" x2="260" y2="436" stroke-width="1" marker-end="url(#a)"/>
+
+<rect class="bg-human" x="130" y="438" width="260" height="48" rx="8" stroke-width="1.5"/>
+<text class="t-human" x="260" y="455" font-size="14" font-weight="500" text-anchor="middle" dominant-baseline="central">Merge gate</text>
+<text class="t-sub" x="260" y="471" font-size="12" text-anchor="middle" dominant-baseline="central">approve → ships → ↻ next</text>
+</svg>
