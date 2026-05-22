@@ -1,0 +1,41 @@
+# Reference CI for a ringi-driven-harness project.
+# Copy to .github/workflows/ci.yml and adapt to your stack.
+# Every pull request must pass before it reaches the human merge gate:
+# secret scan first, then tests, then end-to-end checks.
+
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, required for secret scanning
+
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+
+      # --- Adapt the steps below to your stack; delete what you do not use ---
+
+      # Node / web frontend
+      # - uses: actions/setup-node@v4
+      #   with: { node-version: 20 }
+      # - run: npm ci
+      # - name: Unit tests
+      #   run: npm test
+      # - name: Install Playwright browsers
+      #   run: npx playwright install --with-deps
+      # - name: End-to-end tests
+      #   run: npx playwright test
+
+      # Python
+      # - uses: actions/setup-python@v5
+      #   with: { python-version: '3.12' }
+      # - run: pip install -r requirements.txt
+      # - name: Tests
+      #   run: pytest
