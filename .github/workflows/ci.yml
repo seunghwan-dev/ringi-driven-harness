@@ -12,6 +12,9 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read        # actions/checkout
+      pull-requests: read   # gitleaks reads PR commits (403 without this)
     steps:
       - uses: actions/checkout@v4
         with:
