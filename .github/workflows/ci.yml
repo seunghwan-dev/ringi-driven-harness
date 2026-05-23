@@ -12,6 +12,9 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read        # actions/checkout
+      pull-requests: read   # gitleaks reads PR commits (403 without this)
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,5 +22,8 @@ jobs:
 
       - name: Secret scan
         uses: gitleaks/gitleaks-action@v2
+        env:
+          # Required for gitleaks-action to scan pull requests (v2 breaking change).
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # Free for personal-account repositories. A GITLEAKS_LICENSE secret is
         # only required for organization-owned repos.
