@@ -18,6 +18,7 @@ Guardrails for autonomous and assisted work in this repository. Each rule exists
 
 - When reading or measuring a UTF-8 file in PowerShell, always pass `-Encoding UTF8`. The default encoding follows the system locale and will misread the file.
 - When a measurement looks wrong, suspect the instrument before the artifact. Confirm with an encoding-independent method, such as a byte-level read, before reporting a defect.
+- For byte-level checks under PowerShell 5.1, read raw bytes with `[System.IO.File]::ReadAllBytes(path)`. Do not use `Format-Hex -Count` — the `-Count` parameter is PowerShell 7+ only and errors on 5.1.
 
 ## Specs
 
