@@ -56,6 +56,8 @@ A new repository has no branch protection and no pull-request gate yet, so its f
 
 The gate is always the merge. Who makes the commit changes; where the human stands does not.
 
+The human gate does not stand alone. AI-written code can look correct yet fail on an edge case or hide a vulnerability — "looks right" is not "is right." So tests are not optional. Branch protection turns the CI workflow (secret scan, then tests) into a required status check: a pull request that is not green cannot be merged, even by the developer. The automated gate is the precondition; the human gate is the decision.
+
 ## Progressive adoption
 
 Do not hand over the keys to full autonomy on day one. Trust is built in stages:

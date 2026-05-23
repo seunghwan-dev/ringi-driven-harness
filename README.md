@@ -22,7 +22,7 @@ A harness answers that. An agent harness is the scaffolding around a model — t
 
 Four independent Claude sessions touch each change — the one that designs, the one that builds, the one that reviews, the one that evaluates — and none of them sees the others' conclusions. That mutual blindness is the cross-check.
 
-The merge gate is the heart of the harness: everything above it can be automated, but whether a change ships is one human click. That is *human at the gates, not in the loop*.
+The merge gate is the heart of the harness: everything above it can be automated, but whether a change ships is one human click. That click sits behind an automated gate: tests and a secret scan run as required checks, so a change that is not green never reaches it. That is *human at the gates, not in the loop*.
 
 ## Repository layout
 
