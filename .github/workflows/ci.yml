@@ -19,5 +19,8 @@ jobs:
 
       - name: Secret scan
         uses: gitleaks/gitleaks-action@v2
+        env:
+          # Required for gitleaks-action to scan pull requests (v2 breaking change).
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # Free for personal-account repositories. A GITLEAKS_LICENSE secret is
         # only required for organization-owned repos.
