@@ -58,6 +58,40 @@ The gate is always the merge. Who makes the commit changes; where the human stan
 
 The human gate does not stand alone. AI-written code can look correct yet fail on an edge case or hide a vulnerability — "looks right" is not "is right." So tests are not optional. Branch protection turns the CI workflow (secret scan, then tests) into a required status check: a pull request that is not green cannot be merged, even by the developer. The automated gate is the precondition; the human gate is the decision.
 
+## Gates at every stage
+
+It is tempting to think of this harness as having a single gate — the human merge. It has
+three, and the human holds the last one.
+
+1. **The automated gate.** Every change is checked by CI before it can merge: the test
+   suite must pass and a secret scan (gitleaks) must come back clean. This is the `verify`
+   status check, and `main` will not accept a merge without it.
+2. **The AI review.** `@claude` reviews the change on the pull request — a second reader
+   that runs every time, tirelessly, and never gets bored on the fiftieth diff of the day.
+   It surfaces issues for the human, but it does not merge.
+3. **The human gate.** A person reads the diff and the AI's review, then decides — and
+   stamps the merge. This is the ringi.
+
+The layers exist because each covers the others' blind spots. A green CI run is necessary,
+not sufficient: tests catch regressions, not bad judgment. An AI reviewer is a tireless
+second pair of eyes, but an AI that both writes and reviews shares its own blind spots and
+can be confidently wrong — so it advises, it does not decide. A human brings judgment and
+accountability, but a human alone tires, rubber-stamps, and cannot read everything
+carefully — so the first two layers exist to keep the human gate meaningful rather than a
+formality. A mistake has to slip past all three.
+
+**Severity decides what blocks.** Not every finding is equal. A finding marked *critical*
+— a security hole, a data-loss path, a broken contract — blocks the merge until resolved.
+An *advisory* finding — a style preference, an unlikely edge case — is left to the human's
+judgment at the gate. Critical findings are resolved before the stamp; advisory findings
+inform it.
+
+**Why the human keeps the last gate.** The harness could automate the final decision too
+— let the AI approve and merge its own work. It deliberately does not. The rule is *the AI
+proposes, the human decides*: machines prepare, vet, and recommend; a person reviews and is
+accountable for what reaches `main`. That is the ringi. Every layer before the human exists
+to make that decision easy and well-informed, not to replace it.
+
 ## Progressive adoption
 
 Do not hand over the keys to full autonomy on day one. Trust is built in stages:
