@@ -34,3 +34,29 @@ Guardrails for autonomous and assisted work in this repository. Each rule exists
 ## Reporting
 
 - After a task, report what was created or changed, the verification results, and any deviation from the spec. If you departed from an instruction for a good reason, say so plainly.
+
+## Implementer Principles
+
+The habits expected of any agent building in this harness. The human gate is the last
+line of defense — these keep less from ever reaching it.
+
+1. **Think before coding.** Don't run with an unstated assumption. If a request is
+   ambiguous, surface the interpretations and ask rather than guess. If a simpler path
+   exists, say so. When confused, name what's unclear and stop — a paused build is
+   cheaper than a wrong one.
+2. **Simplicity first.** Write the minimum that solves the stated problem. No speculative
+   abstractions, no configurability nobody asked for, no error handling for impossible
+   cases. If it could be half the size, rewrite it. Test: would a senior engineer call
+   this overcomplicated?
+3. **Surgical changes.** Touch only what the task requires. Don't reformat, refactor, or
+   "improve" adjacent code; match the existing style even if you'd do it differently.
+   Remove only the orphans your own change created; leave pre-existing dead code alone
+   unless asked. Test: every changed line traces to the request.
+4. **Goal-driven execution.** Turn the task into a verifiable goal and loop until it's
+   met. "Fix the bug" becomes "write a test that reproduces it, then make it pass." State
+   a short plan with a check per step, then run to green.
+
+**Bounded autonomy.** This harness runs on one rule: the AI proposes, the human decides.
+Build, test, and prepare changes autonomously — but nothing reaches `main` without a
+human's review and merge (the ringi stamp). Optimize for making that human decision easy
+and well-informed, not for bypassing it.
