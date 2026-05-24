@@ -41,6 +41,16 @@ templates/   Reusable harness components (CLAUDE.md, issue template, CI)
 
 Work in progress. This repository is built using the workflow it describes.
 
+## Related work
+
+This harness draws on written practice from the broader Claude Code / agentic-development community, adapted to its own human-at-the-gates philosophy:
+
+- [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) — the implementer-discipline principles (think before coding, simplicity, surgical changes, goal-driven execution) build on its distillation of common LLM coding pitfalls.
+- [ECC](https://github.com/affaan-m/ECC) — grading review findings by severity (what blocks vs. what merely informs) is adapted from its security-review and verification practice.
+- [gstack](https://github.com/garrytan/gstack) — the "the AI proposes, the human decides" framing of bounded autonomy echoes its builder ethos.
+
+Where those projects largely automate the review gates, this harness keeps a human at the final gate by design — the ringi stamp. The pieces are borrowed as written norms only; none of their runtime systems (skill packs, hooks, agents) are vendored here. All three are MIT-licensed; the principles above are adapted in our own words, not copied.
+
 ## License
 
 [MIT](LICENSE)
