@@ -1,0 +1,44 @@
+# Live applied copy of templates/nightly-workflow.yml — see that file for usage notes.
+
+name: nightly-autonomous-build
+
+on:
+  schedule:
+    - cron: "0 17 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+concurrency:
+  group: nightly-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: "--max-turns 15 --model claude-opus-4-7"
+          prompt: |
+            You are running as an UNATTENDED nightly build. No human is watching during the run.
+
+            1. Find the oldest OPEN issue labeled "nightly-ready". If none exists, STOP — do nothing.
+            2. Read that issue and the repo's CLAUDE.md for the rules you must follow.
+            3. Create a new branch: nightly/issue-<number>.
+            4. Implement ONLY what the issue asks. Keep the change minimal and focused.
+            5. If a test command exists, run it and make it pass before proceeding.
+            6. Commit (English message, NO AI co-author), push the branch, and open a PR
+               to main with a body that references "Closes #<number>".
+            7. Remove the "nightly-ready" label from the issue so it is not re-processed.
+            8. NEVER push to main. NEVER merge. Stop after the PR is open.
+            9. If anything is ambiguous or risky, open the PR as DRAFT and explain why in the body.
