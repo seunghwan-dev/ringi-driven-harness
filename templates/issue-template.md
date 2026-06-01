@@ -2,6 +2,10 @@
 
 Copy this for every unit of work handed to an autonomous build. A clean cloud session sees only what is written here — nothing from the conversation that produced it.
 
+This is the **work order**: the canonical, self-contained form a task takes before it is handed to a build. When no one is watching the build in real time, it is the primary safety control — it fixes the scope, names the files, and defines done, so an unsupervised run stays in bounds.
+
+The fields map a routine's three decisions: **context** — what the build may read (Goal, Intent, Scope); **steering** — how it is constrained (Files to create or change, Acceptance criteria, Forbidden actions); and the **trigger** — when it runs, set by how you file or label the issue.
+
 ## Goal
 
 One sentence: what this task achieves, and why.
