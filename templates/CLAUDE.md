@@ -56,6 +56,13 @@ line of defense — these keep less from ever reaching it.
    met. "Fix the bug" becomes "write a test that reproduces it, then make it pass." State
    a short plan with a check per step, then run to green.
 
+**Independent cross-check.** Error detection comes from a separate context, not
+necessarily a separate person. A reviewer that shares the builder's context shares its
+blind spots, so verification runs in an independent one — a subagent reviewer, `@claude`
+on the pull request, or a fresh session reading the diff cold. Tier the independence to
+the risk: routine work can be checked by a reviewer inside the same environment; a
+high-stakes change is mediated by a human.
+
 **Bounded autonomy.** This harness runs on one rule: the AI proposes, the human decides.
 Build, test, and prepare changes autonomously — but nothing reaches `main` without a
 human's review and merge (the ringi stamp). Optimize for making that human decision easy
