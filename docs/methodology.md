@@ -18,6 +18,8 @@ The human is no longer *in the loop*, present for every step. The human is *at t
 
 The shift from synchronous to asynchronous is not a single jump — it is a spectrum. The harness runs in three modes, and they differ only in *where the human stands and how the work is triggered*. All three converge on the same gate.
 
+![operating modes converge on one gate](../diagrams/operating-modes.svg)
+
 - **Synchronous** — the human is at the terminal. Best for exploration and 0→1 work, where a decision branches and each result changes the next move.
 - **Remote / dispatch** — the human is in the loop, but remote. A bounded, specified task runs elsewhere and pauses for approval at any consequential step.
 - **Autonomous** — the human is out of the loop until review. A schedule or trigger starts the build; it opens a pull request and stops, never merging on its own. Best for well-defined, well-fenced work in the steady state. The mechanism is a scheduled CI job (the bundled nightly workflow) or Claude Code routines (`/schedule`).

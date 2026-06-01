@@ -43,7 +43,7 @@ templates/   Reusable harness components (CLAUDE.md, issue template, CI)
 ## Lineage
 
 - **v1** [`ringi-driven-dev`](https://github.com/seunghwan-dev/ringi-driven-dev) — synchronous. Human at the keyboard.
-- **v2** `ringi-driven-harness` — asynchronous harness. Builds while you sleep.
+- **v2** `ringi-driven-harness` — asynchronous harness. Autonomous builds that open pull requests for review.
 
 ## Status
 
