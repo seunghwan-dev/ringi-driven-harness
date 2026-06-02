@@ -116,6 +116,8 @@ accountability, but a human alone tires, rubber-stamps, and cannot read everythi
 carefully — so the first two layers exist to keep the human gate meaningful rather than a
 formality. A mistake has to slip past all three.
 
+**The gate guards only what it runs.** A passing check covers the surfaces it exercises, and no others. A surface the gate never runs — a frontend that compiles but is never rendered, an integration never driven — is an ungated path: it reaches the human green and can still be broken. So coverage is matched to the surfaces a change actually has, and it is layered — lint, type-check, unit, end-to-end — with each layer added as a step inside the required job, never as a separate optional one that sits un-required until someone remembers to register it. The runtime layers especially: a UI's behavior is only real in a running browser, so something has to run it before the human does — a deterministic end-to-end suite in the gate, or an agent with eyes on the page that drives the flow, finds the regression, and turns it into a test the gate then keeps. The human gate is for judgment, not for discovering a broken render by clicking through by hand.
+
 **Severity decides what blocks.** Not every finding is equal. A finding marked *critical*
 — a security hole, a data-loss path, a broken contract — blocks the merge until resolved.
 An *advisory* finding — a style preference, an unlikely edge case — is left to the human's
