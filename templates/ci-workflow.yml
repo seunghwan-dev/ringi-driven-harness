@@ -1,7 +1,7 @@
 # Reference CI for a ringi-driven-harness project.
 # Copy to .github/workflows/ci.yml and adapt to your stack.
 # Every pull request must pass before it reaches the human merge gate:
-# secret scan first, then tests, then end-to-end checks.
+# secret scan first, then lint / type-check / unit tests, then end-to-end checks.
 # Register this workflow as a required status check in branch protection —
 # otherwise the gate has no teeth, and a red run would not block the merge.
 
@@ -24,10 +24,16 @@ jobs:
 
       # --- Adapt the steps below to your stack; delete what you do not use ---
 
-      # Node / web frontend
+      # Node / web frontend.
+      # Layered cheapest-first: lint -> type-check -> unit -> end-to-end.
+      # Each is a step in this required job, so each is merge-blocking.
       # - uses: actions/setup-node@v4
       #   with: { node-version: 20 }
       # - run: npm ci
+      # - name: Lint
+      #   run: npm run lint        # eslint, incl. react / react-hooks rules
+      # - name: Type-check / build
+      #   run: npm run build       # tsc + bundler — fails on type regressions
       # - name: Unit tests
       #   run: npm test
       # - name: Install Playwright browsers
