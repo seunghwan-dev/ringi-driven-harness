@@ -130,6 +130,62 @@ proposes, the human decides*: machines prepare, vet, and recommend; a person rev
 accountable for what reaches `main`. That is the ringi. Every layer before the human exists
 to make that decision easy and well-informed, not to replace it.
 
+## Quality control
+
+Verifying that the software is *good* — not merely unbroken — is a distinct pass, and not
+one the builder should run on its own work. Quality control is an independent, adversarial
+context: it sets out to prove the software *can* break, not to confirm that it passes.
+
+**Run it, don't read it.** Code review and the AI reviewer read; neither sees the running
+software, where a UI's behavior, a workflow's timing, and an integration's contract actually
+live. So QC runs the thing — a deterministic end-to-end suite, or an agent with eyes on the
+surface, driving the flows the build never exercised — and every defect it finds becomes a
+test the gate then keeps, so the same break cannot return.
+
+**Keep "is it broken" apart from "is it good."** These are two layers. *Broken* is
+deterministic and fast — build, type-check, lint, tests, no leaked secrets — and lives in
+the required gate. *Good* is a judgment about behavior and output, often non-deterministic,
+run as its own evaluation against real inputs. A green build says nothing about the second;
+an eval score says nothing about the first.
+
+**Hunt the bugs that survive a green build.** The dangerous class is the one the tests miss:
+a race, a stale read, a broken invariant, a retry that hides a failure, an enum whose new
+case was handled in one place and forgotten in every switch elsewhere, the test that passes
+while never exercising the real failure mode. Trace a new constant through the whole system,
+not just the changed files — and never patch without a root cause: follow the data flow,
+take one hypothesis at a time, and if three fixes fail, stop and question the design rather
+than thrash.
+
+**File findings graded and noise-free.** Every finding carries a severity — critical blocks
+the merge, advisory informs the human at the gate — a confidence, and a concrete
+reproduction (for a security finding, a concrete exploit). A finding the reporter is not
+confident in is held, not filed: a wall of low-confidence noise trains everyone to ignore
+the report.
+
+**Prove the tests are not vacuous.** A test that passes with or without the bug guards
+nothing. Confirm a regression test fails without the fix and passes with it; at scale,
+mutate the code and confirm the suite catches it. State invariants as properties, not a
+handful of examples.
+
+**Evaluating model output is its own discipline.** Where behavior depends on a model, a
+fixed build is not enough. Hold a golden set; pick a grader that matches the claim — exact
+match, a programmatic assertion, or a model as judge — and for non-deterministic output, run
+it k times and gate on the pass rate, not one lucky run. A judge is itself fallible:
+calibrate it against human-labeled examples, let it answer "unknown" rather than forcing a
+verdict, grade one dimension at a time against a clear rubric, and suspect the eval when a
+low score is a grading bug rather than a real regression. Collect the facts deterministically
+and let the model judge the assembled context; treat any model output written to storage as
+untrusted — sanitized in, validated out.
+
+**Break the dependencies.** Software that works when everything is up has not been tested
+where it fails. Kill the data store, the model server, the network mid-call — does it
+degrade gracefully, or serve and store garbage? Each failure path is a test.
+
+**QC proposes; the gate disposes.** QC finds the defect and designs the fix and its
+regression test, but the fix travels the same required gate as any change, and QC never
+merges its own work. It bounds itself, too: a cap on fixes per pass, spending freely on
+safe, reversible changes and stopping to ask before risky ones.
+
 ## Progressive adoption
 
 Do not hand over the keys to full autonomy on day one. Trust is built in stages:
