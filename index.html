@@ -36,6 +36,9 @@
   .ja{display:none}
   body.lang-ja .en{display:none}
   body.lang-ja .ja{display:inline}
+  .d-ja{display:none}
+  body.lang-ja .d-en{display:none}
+  body.lang-ja .d-ja{display:inline}
   .code{background:rgba(233,231,225,.08); padding:1px 7px; border-radius:6px; font-size:.92em}
 
   /* language toggle */
@@ -172,7 +175,7 @@
     <div class="sec-head"><span class="sec-num">02</span><h2><span class="en">Any mode, one gate</span><span class="ja">どのモードでも、ゲートは一つ</span></h2></div>
     <p class="lead"><span class="en">Work can run three ways &mdash; at the terminal, remotely, or on a schedule &mdash; but every path lands at the same gate.</span><span class="ja">作業の進め方は三通り &mdash; 端末の前で、離れた場所から、あるいはスケジュールで。だが、行き着くゲートはどれも同じだ。</span></p>
     <div class="figure">
-      <svg viewBox="0 0 760 360" role="img" aria-label="Three operating modes converge on one gate: automated check, AI review, human merge">
+      <svg id="diagram" viewBox="0 0 760 360" role="img" aria-label="Three operating modes converge on one gate: automated check, AI review, human merge">
         <defs>
           <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
             <path d="M0,0 L9,4.5 L0,9 Z" fill="#697080"/>
@@ -182,18 +185,24 @@
         <g font-family="'Noto Sans','Noto Sans JP',sans-serif">
           <g>
             <rect x="20" y="26" width="250" height="74" rx="12" fill="#2c2630" stroke="#7a3a2c" stroke-width="1.5"/>
-            <text x="44" y="58" fill="#e9e7e1" font-weight="700" font-size="18">Synchronous</text>
-            <text x="44" y="82" fill="#9aa0ab" font-size="12.5">you at the terminal</text>
+            <text class="d-en" x="44" y="58" fill="#e9e7e1" font-weight="700" font-size="18">Synchronous</text>
+            <text class="d-ja" x="44" y="58" fill="#e9e7e1" font-weight="700" font-size="18">同期</text>
+            <text class="d-en" x="44" y="82" fill="#9aa0ab" font-size="12.5">you at the terminal</text>
+            <text class="d-ja" x="44" y="82" fill="#9aa0ab" font-size="12.5">端末の前で</text>
           </g>
           <g>
             <rect x="20" y="143" width="250" height="74" rx="12" fill="#2c2630" stroke="#7a3a2c" stroke-width="1.5"/>
-            <text x="44" y="175" fill="#e9e7e1" font-weight="700" font-size="18">Remote / dispatch</text>
-            <text x="44" y="199" fill="#9aa0ab" font-size="12.5">bounded task, run away from desk</text>
+            <text class="d-en" x="44" y="175" fill="#e9e7e1" font-weight="700" font-size="18">Remote / dispatch</text>
+            <text class="d-ja" x="44" y="175" fill="#e9e7e1" font-weight="700" font-size="18">リモート / 委譲</text>
+            <text class="d-en" x="44" y="199" fill="#9aa0ab" font-size="12.5">bounded task, run away from desk</text>
+            <text class="d-ja" x="44" y="199" fill="#9aa0ab" font-size="12.5">範囲を絞ったタスクを離席中に</text>
           </g>
           <g>
             <rect x="20" y="260" width="250" height="74" rx="12" fill="#2c2630" stroke="#7a3a2c" stroke-width="1.5"/>
-            <text x="44" y="292" fill="#e9e7e1" font-weight="700" font-size="18">Autonomous</text>
-            <text x="44" y="316" fill="#9aa0ab" font-size="12.5">schedule or trigger</text>
+            <text class="d-en" x="44" y="292" fill="#e9e7e1" font-weight="700" font-size="18">Autonomous</text>
+            <text class="d-ja" x="44" y="292" fill="#e9e7e1" font-weight="700" font-size="18">自律</text>
+            <text class="d-en" x="44" y="316" fill="#9aa0ab" font-size="12.5">schedule or trigger</text>
+            <text class="d-ja" x="44" y="316" fill="#9aa0ab" font-size="12.5">スケジュールやトリガーで</text>
           </g>
         </g>
         <!-- connectors to the gate -->
@@ -206,20 +215,26 @@
         <g font-family="'Noto Sans','Noto Sans JP',sans-serif">
           <g>
             <rect x="450" y="44" width="290" height="68" rx="12" fill="#332e63" stroke="#5b54b0" stroke-width="1.5"/>
-            <text x="474" y="74" fill="#fff" font-weight="700" font-size="17">Automated check</text>
-            <text x="474" y="96" fill="#c7c4e6" font-size="12">CI &middot; gitleaks &middot; layered tests</text>
+            <text class="d-en" x="474" y="74" fill="#fff" font-weight="700" font-size="17">Automated check</text>
+            <text class="d-ja" x="474" y="74" fill="#fff" font-weight="700" font-size="17">自動チェック</text>
+            <text class="d-en" x="474" y="96" fill="#c7c4e6" font-size="12">CI &middot; gitleaks &middot; layered tests</text>
+            <text class="d-ja" x="474" y="96" fill="#c7c4e6" font-size="12">CI・gitleaks・多層テスト</text>
           </g>
           <line x1="595" y1="112" x2="595" y2="140" stroke="#697080" stroke-width="1.6" marker-end="url(#ah)"/>
           <g>
             <rect x="450" y="146" width="290" height="68" rx="12" fill="#332e63" stroke="#5b54b0" stroke-width="1.5"/>
-            <text x="474" y="176" fill="#fff" font-weight="700" font-size="17">AI review</text>
-            <text x="474" y="198" fill="#c7c4e6" font-size="12">@claude &middot; advisory</text>
+            <text class="d-en" x="474" y="176" fill="#fff" font-weight="700" font-size="17">AI review</text>
+            <text class="d-ja" x="474" y="176" fill="#fff" font-weight="700" font-size="17">AI レビュー</text>
+            <text class="d-en" x="474" y="198" fill="#c7c4e6" font-size="12">@claude &middot; advisory</text>
+            <text class="d-ja" x="474" y="198" fill="#c7c4e6" font-size="12">@claude・補助的</text>
           </g>
           <line x1="595" y1="214" x2="595" y2="242" stroke="#697080" stroke-width="1.6" marker-end="url(#ah)"/>
           <g>
             <rect x="450" y="248" width="290" height="74" rx="12" fill="#3a241d" stroke="#d6402e" stroke-width="1.8"/>
-            <text x="474" y="280" fill="#fff" font-weight="800" font-size="17">Human merge</text>
-            <text x="474" y="302" fill="#e6b3a8" font-size="12">ringi &middot; approve &rarr; ships</text>
+            <text class="d-en" x="474" y="280" fill="#fff" font-weight="800" font-size="17">Human merge</text>
+            <text class="d-ja" x="474" y="280" fill="#fff" font-weight="800" font-size="17">人がマージ</text>
+            <text class="d-en" x="474" y="302" fill="#e6b3a8" font-size="12">ringi &middot; approve &rarr; ships</text>
+            <text class="d-ja" x="474" y="302" fill="#e6b3a8" font-size="12">稟議・承認 &rarr; 出荷</text>
             <text x="707" y="281" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-weight="700" font-size="15" fill="#d6402e">承</text>
             <text x="707" y="299" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-weight="700" font-size="15" fill="#d6402e">認</text>
           </g>
@@ -317,6 +332,9 @@
       var ja=document.body.classList.toggle('lang-ja');
       document.documentElement.lang= ja ? 'ja' : 'en';
       btn.textContent= ja ? 'EN' : '日本語';
+      document.getElementById('diagram').setAttribute('aria-label', ja
+        ? '3 つの稼働モードが 1 つのゲートに収束する図：自動チェック、AI レビュー、人がマージ'
+        : 'Three operating modes converge on one gate: automated check, AI review, human merge');
     });
   })();
 </script>
