@@ -4,19 +4,15 @@
 
 **English** · [日本語](README.ja.md)
 
+**[See the visual tour →](https://seunghwan-dev.github.io/ringi-driven-harness/)** — the whole harness at a glance. For depth, read [the methodology](docs/methodology.md).
+
 ## What this is
 
-ringi-driven-harness is a methodology — a *user harness* for building real software with Claude Code. It defines how a single developer orchestrates autonomous coding agents through GitHub, with a human approval gate (稟議, *ringi*) in front of every change that reaches `main`.
-
-It is the evolution of [ringi-driven-dev](https://github.com/seunghwan-dev/ringi-driven-dev). v1 was synchronous — you sat at the keyboard. v2 is asynchronous — the work runs in the cloud while you are at the office or asleep, and you review the results when you return.
+ringi-driven-harness is a methodology — a *user harness* for building real software with Claude Code. A single developer orchestrates autonomous coding agents through GitHub, with a human approval gate (稟議, *ringi*) in front of every change that reaches `main`. It is the asynchronous evolution of [ringi-driven-dev](https://github.com/seunghwan-dev/ringi-driven-dev): v1 sat you at the keyboard; v2 runs the work while you are away and shows you the results to approve.
 
 ## Why it exists
 
-Coding agents can now build entire features on their own. Left unsupervised, they also drift from intent, mistake the scope, and ship UI that does not work. The question is no longer *can the agent build it* — it is *how does a human stay in control without sitting in the loop all day*.
-
-A harness answers that. An agent harness is the scaffolding around a model — the execution loop, tools, context management, guardrails, and verification — that turns a raw model into a reliable agent. This repository is a harness at the *workflow* level: the human designs and approves; the cloud builds and verifies.
-
-As agents get cheaper and faster, the fleet stops being the constraint. What stays scarce is governance: an independent check on the work, a human gate on what merges, and decisions that hold across sessions. This harness is that governance layer — and it rides on top of any way the agent runs, whether you drive it yourself, dispatch it remotely, or let it work on a schedule.
+Coding agents can build entire features on their own — and, left unsupervised, drift from intent, mistake the scope, and ship UI that does not work. The question is no longer *can the agent build it*, but *how a human stays in control without sitting in the loop all day*. A harness answers that: the human designs and approves; the cloud builds and verifies. As agents get cheaper, the fleet stops being the constraint — what stays scarce is governance: an independent check on the work, a human gate on what merges, and decisions that hold across sessions. This harness is that layer, and it rides on top of any way the agent runs — whether you drive it yourself, dispatch it remotely, or let it work on a schedule.
 
 ## The workflow
 
