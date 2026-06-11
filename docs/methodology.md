@@ -130,6 +130,16 @@ proposes, the human decides*: machines prepare, vet, and recommend; a person rev
 accountable for what reaches `main`. That is the ringi. Every layer before the human exists
 to make that decision easy and well-informed, not to replace it.
 
+## Right-sizing the gate
+
+**The gate is not uniform — tier its rigor to the risk of the change.** Running the full sequence (independent review, CI, a human merge) on every change, however trivial, is its own failure mode: it spends the most scrutiny where there is least to catch, and the friction tempts people to batch or bypass. A mature gate calibrates.
+
+Two levers keep it fast without weakening it. The first is the *unit of work*: the right unit is the largest coherent change that can be reviewed in one sitting and reverted as one piece — no larger, no smaller. Splitting one coherent change into a string of micro-steps multiplies the ceremony without adding safety, since each step still pays a full review cycle; bundling unrelated changes makes review and revert harder. One goal, one reviewable unit.
+
+The second is *tiering the cross-check*. The independent review earns its cost on substantive change — new behavior, logic, anything on the execution path or touching security — where a regression can hide, and earns nothing on a typo or a copy edit, where there is nothing to find. So the heavyweight review rides the changes that warrant it; low-risk changes pass on CI and a human merge; trivial ones ride along with the next substantive change rather than spinning a cycle of their own.
+
+What never tiers down is the floor: a human still approves what reaches `main`, CI is still green before any merge, and substantive change still gets the independent eye. When the tier is unclear, treat it as the higher one — under-gating a risky change is the only expensive mistake this makes.
+
 ## Quality control
 
 Verifying that the software is *good* — not merely unbroken — is a distinct pass, and not
