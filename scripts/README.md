@@ -34,6 +34,11 @@ python scripts/init_harness_repo.py <repo-name> [--profile docs|app] [--public] 
 
 Always start with `--dry-run` to read the plan.
 
+> **Targets github.com under your own account.** The required-check pin (`integration_id`
+> `15368`, the GitHub Actions app) and `gh repo create`'s default owner are github.com-specific.
+> On GitHub Enterprise Server the Actions app id differs, which would leave the `verify` check
+> unsatisfiable; creating under an organization is also out of scope.
+
 ### The Claude secret (safety-first)
 
 The tool sets the `CLAUDE_CODE_OAUTH_TOKEN` repo secret **only** by reading the environment

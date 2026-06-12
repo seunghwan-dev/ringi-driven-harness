@@ -36,7 +36,8 @@ SECRET_NAME = "CLAUDE_CODE_OAUTH_TOKEN"
 RULESET_NAME = "protect-main"
 DEFAULT_BRANCH = "main"
 STATUS_CHECK_CONTEXT = "verify"
-# GitHub Actions' app id; pins the required `verify` check to Actions (matches this repo).
+# GitHub Actions' app id on github.com; pins the required `verify` check to the Actions app
+# (matches this repo). This id differs on GitHub Enterprise Server - the tool targets github.com.
 GITHUB_ACTIONS_INTEGRATION_ID = 15368
 COMMIT_MESSAGE = "Bootstrap harness repository"
 
@@ -139,11 +140,21 @@ def write_files(workdir: Path, files: dict[str, bytes]) -> None:
 
 # --- git / gh state-changing steps ------------------------------------------
 
-def git_init_commit(workdir: Path) -> None:
+def git_init_commit(workdir: Path, owner: str) -> None:
     step("Initialize local repository and commit the scaffold")
     run(["git", "-C", str(workdir), "init", "-b", DEFAULT_BRANCH], capture=True)
     run(["git", "-C", str(workdir), "add", "-A"], capture=True)
-    run(["git", "-C", str(workdir), "commit", "-m", COMMIT_MESSAGE], capture=True)
+    commit = ["git", "-C", str(workdir), "commit", "-m", COMMIT_MESSAGE]
+    # git commit needs an author identity. If the user has none configured, derive one from the
+    # gh login (and say so) rather than failing the whole bootstrap on a fresh machine.
+    has_identity = run(["git", "-C", str(workdir), "config", "user.email"],
+                       capture=True, check=False).stdout.strip()
+    if not has_identity:
+        name, email = owner, f"{owner}@users.noreply.github.com"
+        info(f"git identity not configured; authoring the bootstrap commit as {name} <{email}>")
+        commit = ["git", "-C", str(workdir), "-c", f"user.name={name}",
+                  "-c", f"user.email={email}", "commit", "-m", COMMIT_MESSAGE]
+    run(commit, capture=True)
 
 
 def create_and_push(name: str, visibility: str, workdir: Path) -> None:
@@ -270,7 +281,7 @@ def main() -> None:
 
     workdir = Path(tempfile.mkdtemp(prefix=f"harness-{name}-"))
     write_files(workdir, files)
-    git_init_commit(workdir)
+    git_init_commit(workdir, owner)
     create_and_push(name, visibility, workdir)
     # The repo now exists on main. If configuration fails past this point, a same-name
     # re-run is refused (never overwrites), so surface how to finish it by hand.
