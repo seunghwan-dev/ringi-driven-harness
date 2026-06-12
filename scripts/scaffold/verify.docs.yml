@@ -1,0 +1,32 @@
+# CI for a ringi-driven-harness project (docs / no-code profile).
+# Runs on every pull request to main: the secret scan must pass before the human merge gate.
+# Register the `verify` job as a required status check in branch protection — otherwise the
+# gate has no teeth, and a red run would not block the merge.
+#
+# When this repository grows code, switch to the application profile (gitleaks + your stack's
+# lint / type-check / tests). See scripts/scaffold/verify.app.yml in the harness repo.
+
+name: verify
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read        # actions/checkout
+      pull-requests: read   # gitleaks reads PR commits (403 without this)
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, required for secret scanning
+
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          # Required for gitleaks-action to scan pull requests (v2 breaking change).
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Free for personal-account repositories. A GITLEAKS_LICENSE secret is
+        # only required for organization-owned repos.

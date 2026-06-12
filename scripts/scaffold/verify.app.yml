@@ -1,0 +1,60 @@
+# CI for a ringi-driven-harness project (application profile).
+# Every pull request must pass before it reaches the human merge gate:
+# secret scan first, then lint / type-check / unit tests, then end-to-end checks.
+# Register the `verify` job as a required status check in branch protection — otherwise the
+# gate has no teeth, and a red run would not block the merge.
+#
+# This scaffold cannot know your stack. Fill in the placeholder steps below for your
+# language / framework, and keep them inside the `verify` job so each stays merge-blocking.
+
+name: verify
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read        # actions/checkout
+      pull-requests: read   # gitleaks reads PR commits (403 without this)
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history, required for secret scanning
+
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          # Required for gitleaks-action to scan pull requests (v2 breaking change).
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ---------------------------------------------------------------------------
+      # STACK-SPECIFIC CHECKS — fill these in for your project, then delete this note.
+      # Layered cheapest-first: lint -> type-check -> unit -> end-to-end. Each is a step
+      # in this required job, so each is merge-blocking. Delete the layers you do not use;
+      # keep the job named `verify` so it stays the registered required status check.
+      #
+      # Node / web frontend:
+      # - uses: actions/setup-node@v4
+      #   with: { node-version: 20 }
+      # - run: npm ci
+      # - name: Lint
+      #   run: npm run lint
+      # - name: Type-check / build
+      #   run: npm run build
+      # - name: Unit tests
+      #   run: npm test
+      # - name: Install Playwright browsers
+      #   run: npx playwright install --with-deps
+      # - name: End-to-end tests
+      #   run: npx playwright test
+      #
+      # Python:
+      # - uses: actions/setup-python@v5
+      #   with: { python-version: '3.12' }
+      # - run: pip install -r requirements.txt
+      # - name: Tests
+      #   run: pytest
+      # ---------------------------------------------------------------------------
