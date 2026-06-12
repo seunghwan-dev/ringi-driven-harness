@@ -145,11 +145,11 @@ def git_init_commit(workdir: Path, owner: str) -> None:
     run(["git", "-C", str(workdir), "init", "-b", DEFAULT_BRANCH], capture=True)
     run(["git", "-C", str(workdir), "add", "-A"], capture=True)
     commit = ["git", "-C", str(workdir), "commit", "-m", COMMIT_MESSAGE]
-    # git commit needs an author identity. If the user has none configured, derive one from the
-    # gh login (and say so) rather than failing the whole bootstrap on a fresh machine.
-    has_identity = run(["git", "-C", str(workdir), "config", "user.email"],
-                       capture=True, check=False).stdout.strip()
-    if not has_identity:
+    # git commit needs BOTH user.name and user.email. If either is missing, derive an identity
+    # from the gh login (and say so) rather than failing the whole bootstrap on a fresh machine.
+    def configured(key):
+        return run(["git", "-C", str(workdir), "config", key], capture=True, check=False).stdout.strip()
+    if not (configured("user.name") and configured("user.email")):
         name, email = owner, f"{owner}@users.noreply.github.com"
         info(f"git identity not configured; authoring the bootstrap commit as {name} <{email}>")
         commit = ["git", "-C", str(workdir), "-c", f"user.name={name}",
