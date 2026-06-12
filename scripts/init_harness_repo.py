@@ -4,16 +4,16 @@
 Creates a new GitHub repository configured to harness standards in a single command:
 
   * scaffolds the verify CI + @claude review workflows, CLAUDE.md, .gitignore,
-    README, and the work-order issue template (profile-aware)
+    .gitattributes, README, and the work-order issue template (profile-aware)
   * commits and pushes the scaffold to main
   * applies the branch-protection ruleset (pull request required, `verify`
     required status check, direct push to main blocked)
   * sets the Claude OAuth secret from the environment - never from a literal
 
 To avoid duplicating content, the tool reuses this harness checkout's own canonical
-files (CLAUDE.md, the issue template, .gitignore, the @claude workflow) and copies the
-two verify.yml variants and the README skeleton from scripts/scaffold/. It must therefore
-be run from inside a checkout of the harness repo. See scripts/README.md.
+files (CLAUDE.md, the issue template, .gitignore, .gitattributes, the @claude workflow)
+and copies the two verify.yml variants and the README skeleton from scripts/scaffold/. It
+must therefore be run from inside a checkout of the harness repo. See scripts/README.md.
 
 Usage:
     python scripts/init_harness_repo.py <repo-name> [--profile docs|app] [--public] [--dry-run]
@@ -47,6 +47,7 @@ REUSED_FILES = {
     "templates/CLAUDE.md": "CLAUDE.md",
     "templates/issue-template.md": "templates/issue-template.md",
     ".gitignore": ".gitignore",
+    ".gitattributes": ".gitattributes",
     ".github/workflows/claude.yml": ".github/workflows/claude.yml",
 }
 

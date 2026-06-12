@@ -82,6 +82,7 @@ scripts/
 
 To avoid duplicating content, the tool **reuses this repo's own canonical files** for the parts
 the harness already defines once — it copies `templates/CLAUDE.md`, `templates/issue-template.md`,
-the root `.gitignore`, and `.github/workflows/claude.yml` straight into the new repo. Only the
-files that have no canonical form here (the two `verify.yml` variants and the README skeleton)
-live under `scaffold/`. That is why the tool must be run from inside a harness checkout.
+the root `.gitignore`, the root `.gitattributes`, and `.github/workflows/claude.yml` straight into
+the new repo. Only the files that have no canonical form here (the two `verify.yml` variants and the
+README skeleton) live under `scaffold/`. That is why the tool must be run from inside a harness
+checkout.
